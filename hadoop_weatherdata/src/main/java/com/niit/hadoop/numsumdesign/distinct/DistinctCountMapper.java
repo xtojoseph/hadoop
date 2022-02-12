@@ -1,20 +1,19 @@
-package com.niit.hadoop.numsumdesign;
+package com.niit.hadoop.numsumdesign.distinct;
 
 import java.io.IOException;
 
-import org.apache.hadoop.io.FloatWritable;
+import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
-public class AvgMapper extends Mapper<LongWritable, Text, Text, FloatWritable> {
+public class DistinctCountMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
 
 	@Override
 	public void map(LongWritable keyIn, Text valueIn, Context context) throws IOException, InterruptedException {
 		String line = valueIn.toString();
 		String month = line.substring(6, 12);
-		Float temp = Float.parseFloat(line.substring(48, 53));
 		
-		context.write(new Text(month), new FloatWritable(temp));
+		context.write(new Text(month), new IntWritable(1));
 	}
 }
