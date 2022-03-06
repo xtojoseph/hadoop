@@ -1,0 +1,4 @@
+define grpSum(R,group_fld,sum_fld) returns Y {
+	A = group $R by $group_fld;
+	$Y = foreach A generate group, SUM($R.$sum_fld);
+};

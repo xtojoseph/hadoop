@@ -1,0 +1,5 @@
+C1,Mobile,10
+C2,Laptop,5
+C1,Laptop,3
+C3,Mobile,5
+C3,Laptop,6
