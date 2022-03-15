@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.pig.EvalFunc;
 import org.apache.pig.data.Tuple;
 
@@ -15,14 +16,29 @@ public class NumToString extends EvalFunc<String> {
 	public String exec(Tuple input) throws IOException {
 		if (input == null || input.size() == 0)
 			return null;
-		String str = (String) input.get(0);
-		List<String> output = new ArrayList<>();
-		str.chars().mapToObj(x -> (char) x).forEach(x -> output.add(NUM_TO_WORD.getOrDefault(x.toString(), x.toString())));
-		if (str.endsWith(".")) {
-			output.remove(output.size()-1);
-			return String.join(" ", output).concat(".");
+		try {
+			String inputString = (String) input.get(0);
+			List<String> output = new ArrayList<>();
+			inputString.chars().mapToObj(x -> (char) x).forEach(x -> {
+				/**
+				 * Logic to maintain spaces between words 
+				 * eg: se7en => se seven en 
+				 * eg: 123 => one two three
+				 */
+				if (!NUM_TO_WORD.containsKey(x.toString()) && !output.isEmpty()
+						&& !NUM_TO_WORD.containsValue(output.get(output.size() - 1)))
+					output.set(output.size() - 1, output.get(output.size() - 1) + x.toString());
+				else
+					output.add(NUM_TO_WORD.getOrDefault(x.toString(), x.toString()));
+			});
+			if (inputString.endsWith(".")) {
+				output.remove(output.size() - 1);
+				return String.join(" ", output).trim().concat(".");
+			}
+			return String.join(" ", output).trim();
+		} catch (NullPointerException | IndexOutOfBoundsException e) {
+			return StringUtils.EMPTY;
 		}
-		return String.join(" ", output);
 	}
 
 	private static Map<String, String> getCompleteNumToWord() {
