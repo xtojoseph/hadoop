@@ -1,9 +1,7 @@
 package com.niit.pig;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
@@ -18,31 +16,37 @@ public class NumToString extends EvalFunc<String> {
 			return null;
 		try {
 			String inputString = (String) input.get(0);
-			List<String> output = new ArrayList<>();
-			inputString.chars().mapToObj(x -> (char) x).forEach(x -> {
-				/**
-				 * Logic to maintain spaces between words 
-				 * eg: se7en => se seven en 
-				 * eg: 123 => one two three
-				 */
-				if (!NUM_TO_WORD.containsKey(x.toString()) && !output.isEmpty()
-						&& !NUM_TO_WORD.containsValue(output.get(output.size() - 1)))
-					output.set(output.size() - 1, output.get(output.size() - 1) + x.toString());
-				else
-					output.add(NUM_TO_WORD.getOrDefault(x.toString(), x.toString()));
-			});
+			String lastChar = "";
+
+			/**
+			 * Handle full stop
+			 */
 			if (inputString.endsWith(".")) {
-				output.remove(output.size() - 1);
-				return String.join(" ", output).trim().concat(".");
+				lastChar = ".";
+				inputString = StringUtils.chop(inputString);
 			}
-			return String.join(" ", output).trim();
-		} catch (NullPointerException | IndexOutOfBoundsException e) {
+
+			/**
+			 * Replace number with words
+			 */
+			for (Map.Entry<String, String> e : NUM_TO_WORD.entrySet()) {
+				inputString = inputString.replaceAll(e.getKey(), " " + e.getValue() + " ");
+			}
+
+			/**
+			 * Handle intermediate whitespace and append full stop
+			 */
+			return inputString.replaceAll("  ", " ").trim().concat(lastChar);
+		} catch (NullPointerException e) {
 			return StringUtils.EMPTY;
 		}
 	}
 
 	private static Map<String, String> getCompleteNumToWord() {
 		Map<String, String> numToWord = new HashMap<>();
+		/**
+		 * Key - regex; Value - number in words
+		 */
 		numToWord.put("1", "one");
 		numToWord.put("2", "two");
 		numToWord.put("3", "three");
@@ -53,7 +57,7 @@ public class NumToString extends EvalFunc<String> {
 		numToWord.put("8", "eight");
 		numToWord.put("9", "nine");
 		numToWord.put("0", "zero");
-		numToWord.put(".", "point");
+		numToWord.put("\\.", "point");
 		return numToWord;
 	}
 }
