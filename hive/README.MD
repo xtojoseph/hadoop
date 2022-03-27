@@ -1,4 +1,5 @@
 ***Lab 8 -HIVE***
+
 1.	For the file countries.tsv create
 a.	Managed table
 b.	External table
