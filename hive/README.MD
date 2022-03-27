@@ -4,7 +4,8 @@
 
 a.	Managed table
 b.	External table
-1.	Describe both the tables.
+
+2.	Describe both the tables.
 2.	Load data from local filesystem into the two tables
 3.	Drop the two table to see the difference between managed an external tables of HIVE
 4.	Re-create the tables. Load data from HDFS into the two tables. Drop them and see the difference. 
