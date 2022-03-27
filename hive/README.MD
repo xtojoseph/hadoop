@@ -1,6 +1,7 @@
 ***Lab 8 -HIVE***
 
 1.	For the file countries.tsv create
+
 a.	Managed table
 b.	External table
 1.	Describe both the tables.
@@ -8,6 +9,7 @@ b.	External table
 3.	Drop the two table to see the difference between managed an external tables of HIVE
 4.	Re-create the tables. Load data from HDFS into the two tables. Drop them and see the difference. 
 2.	Consider the wdi.tsv data set. The description of the columns is as follows:
+
 a.	Create the necessary managed table and load the data from local file system
 b.	Write HiveQL queries to 
 i.	Select all the data
@@ -17,18 +19,23 @@ iv.	Order your data in order of decreasing indicator readings. What is the effec
 v.	Use sort by order to order your data. What do you observe
 vi.	Modify your reducer such that each reducer gets data of only a single indicator. For this filter your data for two indicators: Trade (% of GDP) and Foreign direct investment, net inflows (% of GDP) and only for the year 2010.
 vii.	Demonstrate cluster_by operation.
+
 3.	Create tables for countries.tsv and oecd.tsv. Perform the following joins:
+
 a.	All countries that are both NATO and OECD countries
 b.	All countries that are NATO and not OECD countries
 c.	All countries that are OECD and not NATO countries
+
 4.	Create a table for the indicator data set. The data is going to be partitioned by the country code. Load the data into the respective partitions. What effect do you see in the warehouse directory?
 5.	Create an employee table that has emp id, name, a list of email addresses and one address that has city and state. 
+
 a.	Insert data into this table.
 b.	Count the number of email addresses per emp. Make use of a temporary table.
 6.	What are the hiveconf and hivevar namespaces? Create variables in both and access them. 
 7.	Write a hive script to count the occurrence of words in file. 
 
 **Helper**
+
 To run hive script, save file as `.sql` and use below:
 `hive -f /sample.sql`
 
