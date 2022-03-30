@@ -1,0 +1,256 @@
+list
+create 'empdt', cf = ['ed', 'dd']
+desc 'empdt'
+
+
+put 'empdt', 'sales_manager_1001', 'ed:frst_name', 'christo'
+put 'empdt', 'sales_manager_1001', 'ed:lst_name', 'joseph'
+put 'empdt', 'sales_manager_1001', 'ed:phn', '9876543218'
+
+put 'empdt', 'sales_manager_1002', 'ed:frst_name', 'jishnu'
+put 'empdt', 'sales_manager_1002', 'ed:lst_name', 'chandran'
+put 'empdt', 'sales_manager_1002', 'ed:phn', '7896543210'
+
+put 'empdt', 'sales_manager_1002', 'dd:dept_name', 'Mainframe'
+put 'empdt', 'sales_manager_1002', 'dd:dept_abbrv', 'AS400'
+put 'empdt', 'sales_manager_1002', 'dd:dept_name', 'Mainframe Domain'
+
+put 'empdt', 'sales_manager_1001', 'dd:dept_name', 'Web Application'
+put 'empdt', 'sales_manager_1001', 'dd:dept_abbrv', 'Java'
+
+
+
+put 'empdt', 'sales_gpm_1003', 'ed:frst_name', 'rahul'
+put 'empdt', 'sales_gpm_1003', 'ed:lst_name', 'nambiar'
+put 'empdt', 'sales_gpm_1003', 'ed:phn', '9876123218'
+
+put 'empdt', 'sales_gpm_1004', 'ed:frst_name', 'archana'
+put 'empdt', 'sales_gpm_1004', 'ed:lst_name', 'p'
+put 'empdt', 'sales_gpm_1004', 'ed:phn', '7865223210'
+
+put 'empdt', 'sales_gpm_1003', 'dd:dept_abbrv', 'AS400'
+put 'empdt', 'sales_gpm_1003', 'dd:dept_name', 'Mainframe Domain'
+
+put 'empdt', 'sales_gpm_1004', 'dd:dept_name', 'Web Application'
+put 'empdt', 'sales_gpm_1004', 'dd:dept_abbrv', 'Java'
+
+
+
+scan 'empdt', {FILTER => "RowFilter(=,'regexstring:\\w*_manager_\\w*')"}
+
+========================================================================================================================
+ROW                                      COLUMN+CELL      
+ sales_manager_1001                      column=dd:dept_abbrv, timestamp=2022-03-30T14:47:53.414, value=Java
+ sales_manager_1001                      column=dd:dept_name, timestamp=2022-03-30T14:47:38.110, value=Web Application
+ sales_manager_1001                      column=ed:frst_name, timestamp=2022-03-30T14:41:50.787, value=christo
+ sales_manager_1001                      column=ed:lst_name, timestamp=2022-03-30T14:43:34.792, value=joseph
+ sales_manager_1001                      column=ed:phn, timestamp=2022-03-30T14:50:45.618, value=9876543218
+ sales_manager_1002                      column=dd:dept_abbrv, timestamp=2022-03-30T14:46:18.508, value=AS400
+ sales_manager_1002                      column=dd:dept_name, timestamp=2022-03-30T14:46:40.063, value=Mainframe Domain
+ sales_manager_1002                      column=ed:frst_name, timestamp=2022-03-30T14:43:57.749, value=jishnu
+ sales_manager_1002                      column=ed:lst_name, timestamp=2022-03-30T14:44:12.143, value=chandran                                         
+ sales_manager_1002                      column=ed:phn, timestamp=2022-03-30T14:50:55.082, value=7896543210
+2 row(s)
+========================================================================================================================
+
+
+hbase:046:0> scan 'empdt', {FILTER => "PrefixFilter('sales')"}
+
+========================================================================================================================
+ROW                                      COLUMN+CELL      
+ sales_gpm_1003                          column=dd:dept_abbrv, timestamp=2022-03-30T15:06:20.732, value=AS400
+ sales_gpm_1003                          column=dd:dept_name, timestamp=2022-03-30T15:06:20.786, value=Mainframe Domain
+ sales_gpm_1003                          column=ed:frst_name, timestamp=2022-03-30T15:06:20.394, value=rahul
+ sales_gpm_1003                          column=ed:lst_name, timestamp=2022-03-30T15:06:20.436, value=nambiar         
+ sales_gpm_1003                          column=ed:phn, timestamp=2022-03-30T15:06:20.487, value=9876123218
+ sales_gpm_1004                          column=dd:dept_abbrv, timestamp=2022-03-30T15:06:22.336, value=Java
+ sales_gpm_1004                          column=dd:dept_name, timestamp=2022-03-30T15:06:20.892, value=Web Application
+ sales_gpm_1004                          column=ed:frst_name, timestamp=2022-03-30T15:06:20.561, value=archana
+ sales_gpm_1004                          column=ed:lst_name, timestamp=2022-03-30T15:06:20.596, value=p
+ sales_gpm_1004                          column=ed:phn, timestamp=2022-03-30T15:06:20.651, value=7865223210
+ sales_manager_1001                      column=dd:dept_abbrv, timestamp=2022-03-30T14:47:53.414, value=Java
+ sales_manager_1001                      column=dd:dept_name, timestamp=2022-03-30T14:47:38.110, value=Web Application
+ sales_manager_1001                      column=ed:frst_name, timestamp=2022-03-30T14:41:50.787, value=christo
+ sales_manager_1001                      column=ed:lst_name, timestamp=2022-03-30T14:43:34.792, value=joseph
+ sales_manager_1001                      column=ed:phn, timestamp=2022-03-30T14:50:45.618, value=9876543218
+ sales_manager_1002                      column=dd:dept_abbrv, timestamp=2022-03-30T14:46:18.508, value=AS400
+ sales_manager_1002                      column=dd:dept_name, timestamp=2022-03-30T14:46:40.063, value=Mainframe Domain
+ sales_manager_1002                      column=ed:frst_name, timestamp=2022-03-30T14:43:57.749, value=jishnu
+ sales_manager_1002                      column=ed:lst_name, timestamp=2022-03-30T14:44:12.143, value=chandran
+ sales_manager_1002                      column=ed:phn, timestamp=2022-03-30T14:50:55.082, value=7896543210
+4 row(s)
+========================================================================================================================
+
+
+
+hbase:049:0> scan 'empdt', {FILTER => "RowFilter(=,'regexstring:\\w*_1101')"}
+========================================================================================================================
+ROW                                      COLUMN+CELL      
+0 row(s)
+Took 0.0142 seconds                                       
+hbase:050:0> scan 'empdt', {FILTER => "RowFilter(=,'regexstring:\\w*_1001')"}
+ROW                                      COLUMN+CELL      
+ sales_manager_1001                      column=dd:dept_abbrv, timestamp=2022-03-30T14:47:53.414, value=Java                                        
+ sales_manager_1001                      column=dd:dept_name, timestamp=2022-03-30T14:47:38.110, value=Web Application
+ sales_manager_1001                      column=ed:frst_name, timestamp=2022-03-30T14:41:50.787, value=christo
+ sales_manager_1001                      column=ed:lst_name, timestamp=2022-03-30T14:43:34.792, value=joseph
+ sales_manager_1001                      column=ed:phn, timestamp=2022-03-30T14:50:45.618, value=9876543218
+1 row(s)
+========================================================================================================================
+
+
+
+hbase:051:0> scan 'empdt', {COLUMN => ['ed:phn']}
+========================================================================================================================
+ROW                                      COLUMN+CELL      
+ sales_gpm_1003                          column=ed:phn, timestamp=2022-03-30T15:06:20.487, value=9876123218
+ sales_gpm_1004                          column=ed:phn, timestamp=2022-03-30T15:06:20.651, value=7865223210
+ sales_manager_1001                      column=ed:phn, timestamp=2022-03-30T14:50:45.618, value=9876543218
+ sales_manager_1002                      column=ed:phn, timestamp=2022-03-30T14:50:55.082, value=7896543210
+4 row(s)
+========================================================================================================================
+
+hbase:053:0> scan 'empdt', {FILTER => "SingleColumnValueFilter('dd', 'dept_name', =, 'regexstring:main*')"}
+========================================================================================================================
+ROW                                      COLUMN+CELL      
+ sales_gpm_1003                          column=dd:dept_abbrv, timestamp=2022-03-30T15:06:20.732, value=AS400
+ sales_gpm_1003                          column=dd:dept_name, timestamp=2022-03-30T15:06:20.786, value=Mainframe Domain
+ sales_gpm_1003                          column=ed:frst_name, timestamp=2022-03-30T15:06:20.394, value=rahul 
+ sales_gpm_1003                          column=ed:lst_name, timestamp=2022-03-30T15:06:20.436, value=nambiar
+ sales_gpm_1003                          column=ed:phn, timestamp=2022-03-30T15:06:20.487, value=9876123218
+ sales_manager_1002                      column=dd:dept_abbrv, timestamp=2022-03-30T14:46:18.508, value=AS400
+ sales_manager_1002                      column=dd:dept_name, timestamp=2022-03-30T14:46:40.063, value=Mainframe Domain
+ sales_manager_1002                      column=ed:frst_name, timestamp=2022-03-30T14:43:57.749, value=jishnu
+ sales_manager_1002                      column=ed:lst_name, timestamp=2022-03-30T14:44:12.143, value=chandran     
+ sales_manager_1002                      column=ed:phn, timestamp=2022-03-30T14:50:55.082, value=7896543210
+2 row(s)
+Took 0.1066 seconds                                       
+========================================================================================================================
+
+
+hbase:056:0> scan 'empdt', {COLUMN => ['ed:phn', 'ed:lst_name']}
+========================================================================================================================
+ROW                                      COLUMN+CELL          
+ sales_gpm_1003                          column=ed:lst_name, timestamp=2022-03-30T15:06:20.436, value=nambiar
+ sales_gpm_1003                          column=ed:phn, timestamp=2022-03-30T15:06:20.487, value=9876123218  
+ sales_gpm_1004                          column=ed:lst_name, timestamp=2022-03-30T15:06:20.596, value=p      
+ sales_gpm_1004                          column=ed:phn, timestamp=2022-03-30T15:06:20.651, value=7865223210  
+ sales_manager_1001                      column=ed:lst_name, timestamp=2022-03-30T14:43:34.792, value=joseph 
+ sales_manager_1001                      column=ed:phn, timestamp=2022-03-30T14:50:45.618, value=9876543218  
+ sales_manager_1002                      column=ed:lst_name, timestamp=2022-03-30T14:44:12.143, value=chandran
+ sales_manager_1002                      column=ed:phn, timestamp=2022-03-30T14:50:55.082, value=7896543210 
+ ========================================================================================================================
+ 
+ 
+ hbase:057:0> scan 'empdt', {FILTER => "ColumnCountGetFilter(2)"}
+ ========================================================================================================================
+ROW                                      COLUMN+CELL          
+ sales_gpm_1003                          column=dd:dept_abbrv, timestamp=2022-03-30T15:06:20.732, value=AS400
+ sales_gpm_1003                          column=dd:dept_name, timestamp=2022-03-30T15:06:20.786, value=Mainframe Domain
+ sales_gpm_1004                          column=dd:dept_abbrv, timestamp=2022-03-30T15:06:22.336, value=Java 
+ sales_gpm_1004                          column=dd:dept_name, timestamp=2022-03-30T15:06:20.892, value=Web Application
+ sales_manager_1001                      column=dd:dept_abbrv, timestamp=2022-03-30T14:47:53.414, value=Java 
+ sales_manager_1001                      column=dd:dept_name, timestamp=2022-03-30T14:47:38.110, value=Web Application
+ sales_manager_1002                      column=dd:dept_abbrv, timestamp=2022-03-30T14:46:18.508, value=AS400
+ sales_manager_1002                      column=dd:dept_name, timestamp=2022-03-30T14:46:40.063, value=Mainframe Domain
+4 row(s)
+========================================================================================================================
+
+ hbase:057:0> alter 'empdt', NAME => 'pd'
+ ========================================================================================================================
+Updating all regions with the new schema...
+1/1 regions updated.
+Done.
+Took 2.8424 seconds                                           
+hbase:059:0> describe 'empdt'
+Table empdt is ENABLED
+empdt COLUMN FAMILIES DESCRIPTION
+{NAME => 'dd', BLOOMFILTER => 'ROW', IN_MEMORY => 'false', VERSIONS => '1', KEEP_DELETED_CELLS => 'FALSE', DATA_BLOCK_ENCODING => 'NONE', COMPRESSION => 'NO
+NE', TTL => 'FOREVER', MIN_VERSIONS => '0', BLOCKCACHE => 'true', BLOCKSIZE => '65536', REPLICATION_SCOPE => '0'}
+
+{NAME => 'ed', BLOOMFILTER => 'ROW', IN_MEMORY => 'false', VERSIONS => '1', KEEP_DELETED_CELLS => 'FALSE', DATA_BLOCK_ENCODING => 'NONE', COMPRESSION => 'NO
+NE', TTL => 'FOREVER', MIN_VERSIONS => '0', BLOCKCACHE => 'true', BLOCKSIZE => '65536', REPLICATION_SCOPE => '0'} 
+
+{NAME => 'pd', BLOOMFILTER => 'ROW', IN_MEMORY => 'false', VERSIONS => '1', KEEP_DELETED_CELLS => 'FALSE', DATA_BLOCK_ENCODING => 'NONE', COMPRESSION => 'NO
+NE', TTL => 'FOREVER', MIN_VERSIONS => '0', BLOCKCACHE => 'true', BLOCKSIZE => '65536', REPLICATION_SCOPE => '0'}
+
+3 row(s)
+========================================================================================================================
+
+
+base:068:0> scan 'empdt', {FILTER => "SingleColumnValueFilter('dd', 'dept_name', =, 'regexstring:main*') AND RowFilter(=, 'binary:sales_gpm_1003')"}
+========================================================================================================================
+ROW                                      COLUMN+CELL          
+ sales_gpm_1003                          column=dd:dept_abbrv, timestamp=2022-03-30T15:06:20.732, value=AS400
+ sales_gpm_1003                          column=dd:dept_name, timestamp=2022-03-30T15:06:20.786, value=Mainframe Domain
+ sales_gpm_1003                          column=ed:frst_name, timestamp=2022-03-30T15:06:20.394, value=rahul 
+ sales_gpm_1003                          column=ed:lst_name, timestamp=2022-03-30T15:06:20.436, value=nambiar
+ sales_gpm_1003                          column=ed:phn, timestamp=2022-03-30T15:06:20.487, value=9876123218  
+ sales_gpm_1003                          column=pd:hobbies, timestamp=2022-03-30T15:30:33.674, value=Badminton
+1 row(s)
+Took 0.0807 seconds                                           
+========================================================================================================================
+
+
+hbase:069:0> scan 'empdt', {FILTER => "SingleColumnValueFilter('dd', 'dept_name', =, 'regexstring:main*') OR RowFilter(=, 'binary:sales_gpm_1003')"}
+========================================================================================================================
+ROW                                      COLUMN+CELL          
+ sales_gpm_1003                          column=dd:dept_abbrv, timestamp=2022-03-30T15:06:20.732, value=AS400
+ sales_gpm_1003                          column=dd:dept_name, timestamp=2022-03-30T15:06:20.786, value=Mainframe Domain
+ sales_gpm_1003                          column=ed:frst_name, timestamp=2022-03-30T15:06:20.394, value=rahul 
+ sales_gpm_1003                          column=ed:lst_name, timestamp=2022-03-30T15:06:20.436, value=nambiar
+ sales_gpm_1003                          column=ed:phn, timestamp=2022-03-30T15:06:20.487, value=9876123218  
+ sales_gpm_1003                          column=pd:hobbies, timestamp=2022-03-30T15:30:33.674, value=Badminton
+ sales_manager_1002                      column=dd:dept_abbrv, timestamp=2022-03-30T14:46:18.508, value=AS400
+ sales_manager_1002                      column=dd:dept_name, timestamp=2022-03-30T14:46:40.063, value=Mainframe Domain
+ sales_manager_1002                      column=ed:frst_name, timestamp=2022-03-30T14:43:57.749, value=jishnu
+ sales_manager_1002                      column=ed:lst_name, timestamp=2022-03-30T14:44:12.143, value=chandran          
+ sales_manager_1002                      column=ed:phn, timestamp=2022-03-30T14:50:55.082, value=7896543210  
+2 row(s)
+Took 0.0382 seconds
+========================================================================================================================
+
+
+
+hbase:078:0> scan 'empdt', {FILTER => "SingleColumnValueFilter('ed', 'lst_name', =, 'binary:nambiar') AND SingleColumnValueFilter('dd', 'dept_name', =, 'regexstring:main*')"}
+========================================================================================================================
+ROW                                      COLUMN+CELL          
+ sales_gpm_1003                          column=dd:dept_abbrv, timestamp=2022-03-30T15:06:20.732, value=AS400
+ sales_gpm_1003                          column=dd:dept_name, timestamp=2022-03-30T15:06:20.786, value=Mainframe Domain                               
+ sales_gpm_1003                          column=ed:frst_name, timestamp=2022-03-30T15:06:20.394, value=rahul 
+ sales_gpm_1003                          column=ed:lst_name, timestamp=2022-03-30T15:06:20.436, value=nambiar
+ sales_gpm_1003                          column=ed:phn, timestamp=2022-03-30T15:06:20.487, value=9876123218  
+ sales_gpm_1003                          column=pd:hobbies, timestamp=2022-03-30T15:30:33.674, value=Badminton
+1 row(s)
+Took 0.0295 seconds  
+========================================================================================================================
+
+
+
+scan 'empdt'
+========================================================================================================================
+ROW                                      COLUMN+CELL          
+ sales_gpm_1003                          column=dd:dept_abbrv, timestamp=2022-03-30T15:06:20.732, value=AS400
+ sales_gpm_1003                          column=dd:dept_name, timestamp=2022-03-30T15:06:20.786, value=Mainframe Domain
+ sales_gpm_1003                          column=ed:frst_name, timestamp=2022-03-30T15:06:20.394, value=rahul 
+ sales_gpm_1003                          column=ed:lst_name, timestamp=2022-03-30T15:06:20.436, value=nambiar
+ sales_gpm_1003                          column=ed:phn, timestamp=2022-03-30T15:06:20.487, value=9876123218  
+ sales_gpm_1003                          column=pd:hobbies, timestamp=2022-03-30T15:30:33.674, value=Badminton
+ sales_gpm_1004                          column=dd:dept_abbrv, timestamp=2022-03-30T15:06:22.336, value=Java 
+ sales_gpm_1004                          column=dd:dept_name, timestamp=2022-03-30T15:06:20.892, value=Web Application
+ sales_gpm_1004                          column=ed:frst_name, timestamp=2022-03-30T15:06:20.561, value=archana
+ sales_gpm_1004                          column=ed:lst_name, timestamp=2022-03-30T15:06:20.596, value=p      
+ sales_gpm_1004                          column=ed:phn, timestamp=2022-03-30T15:06:20.651, value=7865223210  
+ sales_manager_1001                      column=dd:dept_abbrv, timestamp=2022-03-30T14:47:53.414, value=Java 
+ sales_manager_1001                      column=dd:dept_name, timestamp=2022-03-30T14:47:38.110, value=Web Application
+ sales_manager_1001                      column=ed:frst_name, timestamp=2022-03-30T14:41:50.787, value=christo
+ sales_manager_1001                      column=ed:lst_name, timestamp=2022-03-30T14:43:34.792, value=joseph 
+ sales_manager_1001                      column=ed:phn, timestamp=2022-03-30T14:50:45.618, value=9876543218  
+ sales_manager_1002                      column=dd:dept_abbrv, timestamp=2022-03-30T14:46:18.508, value=AS400
+ sales_manager_1002                      column=dd:dept_name, timestamp=2022-03-30T14:46:40.063, value=Mainframe Domain
+ sales_manager_1002                      column=ed:frst_name, timestamp=2022-03-30T14:43:57.749, value=jishnu
+ sales_manager_1002                      column=ed:lst_name, timestamp=2022-03-30T14:44:12.143, value=chandran
+ sales_manager_1002                      column=ed:phn, timestamp=2022-03-30T14:50:55.082, value=7896543210  
+4 row(s)
+Took 0.1066 seconds
+========================================================================================================================
