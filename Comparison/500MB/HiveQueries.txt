@@ -1,0 +1,18 @@
+
+CREATE TABLE IF NOT EXISTS OpenAddresses (lon string, lat string, numb int,street string, unit string, city string, district string, region string, postcode string, id string, hash string) 
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ",";
+
+load data local inpath '/media/sf_SharedFolder/500MB.csv'into table OpenAddresses;
+
+select id, city, numb+5 from openaddresses;
+
+select  distinct city from openaddresses;
+
+select count(*) from openaddresses;
+
+select *  from openaddresses where city=='Hempstead';
+
+select *  from openaddresses where city!='Hempstead';
+
+
