@@ -3,7 +3,7 @@ rm -r /home/hdoop/PIG/sample/comparison/$2
 
 START_TIME=$(date +"%s")
 
-time pig -x local -f /home/hdoop/codebase/hadoop/Comparison/$1 -param outDir=$2
+time pig -x local -f /home/hdoop/codebase/Comparison/$1 -param outDir=$2
 
 END_TIME=$(date +"%s") 
 DIFF=$(($END_TIME-$START_TIME))

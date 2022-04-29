@@ -1,18 +1,28 @@
 
-CREATE TABLE IF NOT EXISTS OpenAddresses (lon string, lat string, numb int,street string, unit string, city string, district string, region string, postcode string, id string, hash string) 
-ROW FORMAT DELIMITED
-FIELDS TERMINATED BY ",";
+CREATE TABLE IF NOT EXISTS OpenAddresses (lon string, lat string, num int,street string, unit string, city string, district string, region string, postcode string, id string, hash string) 
+    > ROW FORMAT DELIMITED
+    > FIELDS TERMINATED BY ",";
 
-load data local inpath '/media/sf_SharedFolder/500MB.csv'into table OpenAddresses;
+load
+load data local inpath '/home/hdoop/Downloads/ny.csv'into table OpenAddresses;
 
-select id, city, numb+5 from openaddresses;
+arithmetic
+select id, city, num+5 from openaddresses;
 
-select  distinct city from openaddresses;
+distinct
+select  distinct city from openaddresses order by city;
 
-select count(*) from openaddresses;
+Group by
+SELECT region,count(*) FROM openaddresses GROUP BY REGION;
 
-select *  from openaddresses where city=='Hempstead';
 
+5%
+select *  from openaddresses where city=='Hempstead;
+
+95%
 select *  from openaddresses where city!='Hempstead';
+
+select opn1.id from openaddresses opn1
+JOIN openaddresses opn2 ON opn2.id = opn1.id;
 
 

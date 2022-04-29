@@ -12,9 +12,9 @@ select * from cardetails WHERE color != 'Black';
 
 select * from cardetails GROUP BY isNew;
 
-select DISTINCT * from cardetails;
+select DISTINCT vin from cardetails;
 
-select * from cardetails d1
+select d1.vin from cardetails d1
 JOIN cardetails d2 ON d2.vin = d1.vin;
 
 

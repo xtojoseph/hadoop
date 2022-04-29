@@ -15,6 +15,6 @@ select Suburb,COUNT(Rooms) from Melbondata_5MB Group by Suburb; --Group by
 select M1.Suburb,M1.Rooms,M1.Price from Melbondata_5MB M1 JOIN Melbondata_5MB M2 on M1.Rooms = M2.Rooms; --JOIN
 
 
-
+select distinct Suburb from from Melbondata_5MB;
 
 
