@@ -1,0 +1,123 @@
+############### 50KB ############### 
+#################################### 
+
+create table Melbondata50KB (Suburb STRING,Rooms INT,Type STRING,Price STRING,Method STRING,SellerG STRING,Bedroom2 INT,Bathroom INT)
+row format delimited
+fields terminated by ',';
+
+load data local inpath '/media/sf_SharedFolder/Melbon50KB.csv' into table Melbondata50KB;
+
+select Rooms + Rooms as Sum from Melbondata50KB;
+
+select * from Melbondata50KB where (Suburb!='Reservoir' and  Suburb!= 'Richmond') --95% filter
+
+select * from Melbondata50KB where Suburb like '%Reservoir%' OR Suburb like '%Richmond%';--5% filter
+
+select Suburb,COUNT(Rooms) from Melbondata50KB Group by Suburb; --Group by
+
+select M1.Suburb,M1.Rooms,M1.Price from Melbondata50KB M1 JOIN Melbondata50KB M2 on M1.Rooms = M2.Bedroom2; --JOIN
+
+Select distinct Suburb from Melbondata50KB;
+
+
+############### 500KB ############### 
+#################################### 
+
+create table Melbondata (Suburb STRING,Rooms INT,Type STRING,Price STRING,Method STRING,SellerG STRING,Bedroom2 INT,Bathroom INT)
+row format delimited
+fields terminated by ',';
+
+load data local inpath '/media/sf_SharedFolder/Melbon500KB.csv' into table Melbondata;
+
+select Rooms + Rooms as Sum from Melbondata;
+
+select * from Melbondata where (Suburb!='Reservoir' and  Suburb!= 'Richmond') --95% filter
+
+select * from Melbondata where Suburb like '%Reservoir%' OR Suburb like '%Richmond%';--5% filter
+
+select Suburb,COUNT(Rooms) from Melbondata Group by Suburb; --Group by
+
+select M1.Suburb,M1.Rooms,M1.Price from Melbondata M1 JOIN Melbondata M2 on M1.Rooms = M2.Bedroom2; --JOIN
+
+Select distinct Suburb from Melbondata ;
+
+############### 5MB ############### 
+#################################### 
+
+create table Melbondata_5MB (Suburb STRING,Rooms INT,Type STRING,Price STRING,Method STRING,SellerG STRING,Bedroom2 INT,Bathroom INT)
+row format delimited
+fields terminated by ',';
+
+load data local inpath '/media/sf_SharedFolder/Melbon500KB.csv' into table Melbondata_5MB;
+
+select Rooms + Rooms as Sum from Melbondata_5MB;
+
+select * from Melbondata_5MB where (Suburb!='Reservoir' and  Suburb!= 'Richmond') --95% filter
+
+select * from Melbondata_5MB where Suburb like '%Reservoir%' OR Suburb like '%Richmond%';--5% filter
+
+select Suburb,COUNT(Rooms) from Melbondata_5MB Group by Suburb; --Group by
+
+select M1.Suburb,M1.Rooms,M1.Price from Melbondata_5MB M1 JOIN Melbondata_5MB M2 on M1.Rooms = M2.Rooms; --JOIN
+
+
+select distinct Suburb from from Melbondata_5MB;
+
+
+############### 50MB ############### 
+#################################### 
+create table if not exists RiPrIn22(DATAID int,ISO1 int,EVENTIDCNTY string,EVENTIDNO_CNTY int,EVENT_DATE string,YEAR_i int,TIME_PRECIS int,EVENT_TYPEI string,SUBEVENT_TYP string,ACTOR1 string,ASSOCACTOR1 string,INTER1 int,ACTOR2 string,ASSOCACTOR2 string,INTER2 int,INTERACTION int,REGN string,CNTRY string,ADMIN1 string,ADMIN2 string,ADMIN3 string,LOCATN string,LATI double,LONGI double,GEO_PRECSN int,SRC string,SOURCE_SCALE string,NOTS string,FATALITIES int,tmpstmp int,iso3 string)
+row format delimited
+fields terminated by ',';
+create table if not exists RiPrIn22_ACTR(DATAID int,ISO1 int,EVENTIDCNTY string,EVENTIDNO_CNTY int,EVENT_DATE string,YEAR_i int,TIME_PRECIS int,EVENT_TYPEI string,SUBEVENT_TYP string,ACTOR1 string,ASSOCACTOR1 string,INTER1 int,ACTOR2 string,ASSOCACTOR2 string,INTER2 int,INTERACTION int,REGN string,CNTRY string,ADMIN1 string,ADMIN2 string,ADMIN3 string,LOCATN string,LATI double,LONGI double,GEO_PRECSN int,SRC string,SOURCE_SCALE string,NOTS string,FATALITIES int,tmpstmp int,iso3 string)
+row format delimited
+fields terminated by ',';
+
+load data local inpath '/media/sf_SharedFolder/50MB.csv' into table RiPrIn22_ACTR;
+load data local inpath '/media/sf_SharedFolder/50MB.csv' into table RiPrIn22;
+
+select EVENTIDCNTY, LOCATN, INTER1 + 1 from RiPrIn22 LIMIT 5; --Arithmetic
+select * from RiPrIn22 where LOCATN == 'Jammu' or LOCATN == 'Srinagar'; --5%
+select * from RiPrIn22 where LOCATN != 'Jammu' and LOCATN != 'Srinagar'; -- 95%
+select LOCATN, sum(INTERACTION) from RiPrIn22 group by LOCATN; -- group by
+select DISTINCT LOCATN from RiPrIn22; -- DISTINCT
+select  * from RiPrIn22 Ri join RiPrIn22_ACTR RiA on Ri.EVENTIDCNTY= RiA.EVENTIDCNTY;  -- JOIN
+
+
+
+############### 500MB ############### 
+#################################### 
+CREATE TABLE IF NOT EXISTS OpenAddresses (lon string, lat string, num int,street string, unit string, city string, district string, region string, postcode string, id string, hash string) 
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ",";
+
+load data local inpath '/home/hdoop/Downloads/ny.csv'into table OpenAddresses;
+
+
+select id, city, num+5 from openaddresses; --arithmetic
+select  distinct city from openaddresses order by city; --distinct
+SELECT region,count(*) FROM openaddresses GROUP BY REGION; --Group by
+select *  from openaddresses where city=='Hempstead; -- 5%
+select *  from openaddresses where city!='Hempstead'; --95%
+select opn1.id from openaddresses opn1 JOIN openaddresses opn2 ON opn2.id = opn1.id; -- Join
+
+
+############### 5GB ############### 
+#################################### 
+create table CarDetails(vin string, stockNum string, firstSeen string, lastSeen string, msrp double, askPrice double, mileage double, isNew boolean, color string, interiorColor string)
+row format delimited
+fields terminated by ',';
+
+load data local inpath '/media/sf_SharedFolder/CIS_Automotive_Kaggle_Sample.csv' into table cardetails;
+
+select vin, msrp - askPrice as deviation, msrp, askPrice from cardetails; --airthmetic
+
+select * from cardetails WHERE color = 'Black'; --5%
+
+select * from cardetails WHERE color != 'Black'; --95%
+
+select * from cardetails GROUP BY isNew; --group by
+
+select DISTINCT vin from cardetails; --distinct
+
+select d1.vin from cardetails d1 JOIN cardetails d2 ON d2.vin = d1.vin; --join

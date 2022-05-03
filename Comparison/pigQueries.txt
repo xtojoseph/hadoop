@@ -1,0 +1,187 @@
+
+############################# Arithmetic #############################
+######################################################################
+A = load '/media/sf_SharedFolder/Melbon50KB.csv'using PigStorage(',') As (Suburb:charArray,Rooms:int,Type:charArray,Price:charArray,Method:charArray,SellerG:charArray,Bedroom:charArray,Bathroom:charArray);
+result = FOREACH A Generate  $1+$1 as sum;
+STORE result into '/home/hdoop/PIG/sample/comparison/$outDir';
+
+A = load '/media/sf_SharedFolder/Melbon500KB.csv'using PigStorage(',') As (Suburb:charArray,Rooms:int,Type:charArray,Price:charArray,Method:charArray,SellerG:charArray,Bedroom:charArray,Bathroom:charArray);
+result = FOREACH A Generate  $1+$1 as sum;
+STORE result into '/home/hdoop/PIG/sample/comparison/$outDir';
+
+A = load '/media/sf_SharedFolder/Melbon5MB.csv'using PigStorage(',') As (Suburb:charArray,Rooms:int,Type:charArray,Price:charArray,Method:charArray,SellerG:charArray,Bedroom:charArray,Bathroom:charArray);
+result = FOREACH A Generate  $1+$1 as sum;
+STORE result into '/home/hdoop/PIG/sample/comparison/$outDir';
+
+RiPrIn = load '/media/sf_SharedFolder/50MB.csv' using PigStorage(',') as (DATAID:int,ISO1:int,EVENTIDCNTY:chararray,EVENTIDNO_CNTY:int,EVENT_DATE:chararray,YEAR_i:int,TIME_PRECIS:int,EVENT_TYPEI:chararray,SUBEVENT_TYP:chararray,ACTOR1:chararray,ASSOCACTOR1:chararray,INTER1:int,ACTOR2:chararray,ASSOCACTOR2:chararray,INTER2:int,INTERACTION:int,REGN:chararray,CNTRY:chararray,ADMIN1:chararray,ADMIN2:chararray,ADMIN3:chararray,LOCATN:chararray,LATI:double,LONGI:double,GEO_PRECSN:int,SRC:chararray,SOURCE_SCALE:chararray,NOTS:chararray,FATALITIES:int,tmpstmp:int,iso3:chararray);
+RiPrIn1 = FOREACH RiPrIn GENERATE INTER1 + 1 as NEW_INTER1;
+STORE RiPrIn1 into '/home/hdoop/PIG/sample/comparison/$outDir';
+
+
+a= load '/media/sf_SharedFolder/500MB.csv' using PigStorage(',') as (lon:chararray,lat:chararray,number:int,street:chararray,unit:chararray,city:chararray,district:chararray,region:chararray, postcode:chararray, id:chararray,hash:chararray);
+c =FOREACH a GENERATE *,number+5 AS num3:int;
+STORE c INTO '/home/hdoop/PIG/sample/comparison/$outDir' USING PigStorage (',');
+
+
+A = LOAD '/media/sf_SharedFolder/CIS_Automotive_Kaggle_Sample.csv' USING PigStorage(',') AS (vin: chararray, stockNum: chararray, firstSeen: chararray, lastSeen: chararray, msrp: long, askPrice: long, mileage: long, isNew: boolean, color: chararray, interiorColor: chararray);
+B = FOREACH A GENERATE vin, msrp - askPrice AS Deviation, msrp, askPrice;
+STORE B into '/home/hdoop/PIG/sample/comparison/$outDir';
+
+############################# Filter 5% #############################
+#####################################################################
+A = load '/media/sf_SharedFolder/Melbon50KB.csv'using PigStorage(',') As (Suburb:charArray,Rooms:int,Type:charArray,Price:charArray,Method:charArray,SellerG:charArray,Bedroom:charArray,Bathroom:charArray);
+B = FILTER A by Suburb=='Reservoir' OR Suburb=='Richmond';
+STORE B into '/home/hdoop/PIG/sample/comparison/$outDir';
+
+A = load '/media/sf_SharedFolder/Melbon500KB.csv'using PigStorage(',') As (Suburb:charArray,Rooms:int,Type:charArray,Price:charArray,Method:charArray,SellerG:charArray,Bedroom:charArray,Bathroom:charArray);
+B = FILTER A by Suburb=='Reservoir' OR Suburb=='Richmond';
+STORE B into '/home/hdoop/PIG/sample/comparison/$outDir';
+
+A = load '/media/sf_SharedFolder/Melbon5MB.csv'using PigStorage(',') As (Suburb:charArray,Rooms:int,Type:charArray,Price:charArray,Method:charArray,SellerG:charArray,Bedroom:charArray,Bathroom:charArray);
+B = FILTER A by Suburb=='Reservoir' OR Suburb=='Richmond';
+STORE B into '/home/hdoop/PIG/sample/comparison/$outDir';
+
+RiPrIn = load '/media/sf_SharedFolder/50MB.csv' using PigStorage(',') as (DATAID:int,ISO1:int,EVENTIDCNTY:chararray,EVENTIDNO_CNTY:int,EVENT_DATE:chararray,YEAR_i:int,TIME_PRECIS:int,EVENT_TYPEI:chararray,SUBEVENT_TYP:chararray,ACTOR1:chararray,ASSOCACTOR1:chararray,INTER1:int,ACTOR2:chararray,ASSOCACTOR2:chararray,INTER2:int,INTERACTION:int,REGN:chararray,CNTRY:chararray,ADMIN1:chararray,ADMIN2:chararray,ADMIN3:chararray,LOCATN:chararray,LATI:double,LONGI:double,GEO_PRECSN:int,SRC:chararray,SOURCE_SCALE:chararray,NOTS:chararray,FATALITIES:int,tmpstmp:int,iso3:chararray);
+RiPrIn1 = FILTER RiPrIn by LOCATN == 'Jammu' or LOCATN == 'Srinagar';
+STORE RiPrIn1 into '/home/hdoop/PIG/sample/comparison/$outDir';
+
+a= load '/media/sf_SharedFolder/500MB.csv' using PigStorage(',') as (lon:chararray,lat:chararray,number:int,street:chararray,unit:chararray,city:chararray,district:chararray,region:chararray, postcode:chararray, id:chararray,hash:chararray);
+c = FILTER a by city=='Hempstead';
+STORE c INTO '/home/hdoop/PIG/sample/comparison/$outDir' USING PigStorage (',');
+
+
+A = LOAD '/media/sf_SharedFolder/CIS_Automotive_Kaggle_Sample.csv' USING PigStorage(',') AS (vin: chararray, stockNum: chararray, firstSeen: chararray, lastSeen: chararray, msrp: long, askPrice: long, mileage: long, isNew: boolean, color: chararray, interiorColor: chararray);
+B = FILTER A BY color == 'Black';
+STORE B into '/home/hdoop/PIG/sample/comparison/$outDir';
+
+############################# Filter 95% #############################
+#####################################################################	
+A = load '/media/sf_SharedFolder/Melbon50KB.csv'using PigStorage(',') As (Suburb:charArray,Rooms:int,Type:charArray,Price:charArray,Method:charArray,SellerG:charArray,Bedroom:charArray,Bathroom:charArray);
+E = FILTER A by Suburb!='Reservoir'AND Suburb!='Richmond';
+STORE E into '/home/hdoop/PIG/sample/comparison/$outDir';
+
+A = load '/media/sf_SharedFolder/Melbon500KB.csv'using PigStorage(',') As (Suburb:charArray,Rooms:int,Type:charArray,Price:charArray,Method:charArray,SellerG:charArray,Bedroom:charArray,Bathroom:charArray);
+E = FILTER A by Suburb!='Reservoir'AND Suburb!='Richmond';
+STORE E into '/home/hdoop/PIG/sample/comparison/$outDir';
+
+
+A = load '/media/sf_SharedFolder/Melbon5MB.csv'using PigStorage(',') As (Suburb:charArray,Rooms:int,Type:charArray,Price:charArray,Method:charArray,SellerG:charArray,Bedroom:charArray,Bathroom:charArray);
+E = FILTER A by Suburb!='Reservoir'AND Suburb!='Richmond';
+STORE E into '/home/hdoop/PIG/sample/comparison/$outDir';
+
+
+
+RiPrIn = load '/media/sf_SharedFolder/50MB.csv' using PigStorage(',') as (DATAID:int,ISO1:int,EVENTIDCNTY:chararray,EVENTIDNO_CNTY:int,EVENT_DATE:chararray,YEAR_i:int,TIME_PRECIS:int,EVENT_TYPEI:chararray,SUBEVENT_TYP:chararray,ACTOR1:chararray,ASSOCACTOR1:chararray,INTER1:int,ACTOR2:chararray,ASSOCACTOR2:chararray,INTER2:int,INTERACTION:int,REGN:chararray,CNTRY:chararray,ADMIN1:chararray,ADMIN2:chararray,ADMIN3:chararray,LOCATN:chararray,LATI:double,LONGI:double,GEO_PRECSN:int,SRC:chararray,SOURCE_SCALE:chararray,NOTS:chararray,FATALITIES:int,tmpstmp:int,iso3:chararray);
+RiPrIn1 = FILTER RiPrIn by LOCATN != 'Jammu' and LOCATN != 'Srinagar';
+STORE RiPrIn1 into '/home/hdoop/PIG/sample/comparison/$outDir';
+
+
+a= load '/media/sf_SharedFolder/500MB.csv' using PigStorage(',') as (lon:chararray,lat:chararray,number:int,street:chararray,unit:chararray,city:chararray,district:chararray,region:chararray, postcode:chararray, id:chararray,hash:chararray);
+c = FILTER a by city!='Hempstead';
+STORE c INTO '/home/hdoop/PIG/sample/comparison/$outDir' USING PigStorage (',');
+
+
+
+A = LOAD '/media/sf_SharedFolder/CIS_Automotive_Kaggle_Sample.csv' USING PigStorage(',') AS (vin: chararray, stockNum: chararray, firstSeen: chararray, lastSeen: chararray, msrp: long, askPrice: long, mileage: long, isNew: boolean, color: chararray, interiorColor: chararray);
+B = FILTER A BY color != 'Black';
+STORE B into '/home/hdoop/PIG/sample/comparison/$outDir';
+
+
+############################# Group by #############################
+#####################################################################
+A = load '/media/sf_SharedFolder/Melbon50KB.csv'using PigStorage(',') As (Suburb:charArray,Rooms:int,Type:charArray,Price:charArray,Method:charArray,SellerG:charArray,Bedroom:charArray,Bathroom:charArray);
+G = GROUP A by $3;
+STORE G into '/home/hdoop/PIG/sample/comparison/$outDir';
+
+
+A = load '/media/sf_SharedFolder/Melbon500KB.csv'using PigStorage(',') As (Suburb:charArray,Rooms:int,Type:charArray,Price:charArray,Method:charArray,SellerG:charArray,Bedroom:charArray,Bathroom:charArray);
+G = GROUP A by $3;
+STORE G into '/home/hdoop/PIG/sample/comparison/$outDir';
+
+
+A = load '/media/sf_SharedFolder/Melbon5MB.csv'using PigStorage(',') As (Suburb:charArray,Rooms:int,Type:charArray,Price:charArray,Method:charArray,SellerG:charArray,Bedroom:charArray,Bathroom:charArray);
+G = GROUP A by $3;
+STORE G into '/home/hdoop/PIG/sample/comparison/$outDir';
+
+
+RiPrIn = load '/media/sf_SharedFolder/50MB.csv' using PigStorage(',') as (DATAID:int,ISO1:int,EVENTIDCNTY:chararray,EVENTIDNO_CNTY:int,EVENT_DATE:chararray,YEAR_i:int,TIME_PRECIS:int,EVENT_TYPEI:chararray,SUBEVENT_TYP:chararray,ACTOR1:chararray,ASSOCACTOR1:chararray,INTER1:int,ACTOR2:chararray,ASSOCACTOR2:chararray,INTER2:int,INTERACTION:int,REGN:chararray,CNTRY:chararray,ADMIN1:chararray,ADMIN2:chararray,ADMIN3:chararray,LOCATN:chararray,LATI:double,LONGI:double,GEO_PRECSN:int,SRC:chararray,SOURCE_SCALE:chararray,NOTS:chararray,FATALITIES:int,tmpstmp:int,iso3:chararray);
+RiPrIn2 = GROUP RiPrIn BY LOCATN;
+STORE RiPrIn2 into '/home/hdoop/PIG/sample/comparison/$outDir';
+
+
+A= load '/media/sf_SharedFolder/500MB.csv' using PigStorage(',') as (lon:chararray,lat:chararray,number:int,street:chararray,unit:chararray,city:chararray,district:chararray,region:chararray, postcode:chararray, id:chararray,hash:chararray);
+B = GROUP A BY region;
+STORE B INTO '/home/hdoop/PIG/sample/comparison/$outDir' USING PigStorage (',');
+
+
+A = LOAD '/media/sf_SharedFolder/CIS_Automotive_Kaggle_Sample.csv' USING PigStorage(',') AS (vin: chararray, stockNum: chararray, firstSeen: chararray, lastSeen: chararray, msrp: long, askPrice: long, mileage: long, isNew: boolean, color: chararray, interiorColor: chararray);
+B = GROUP A BY isNew;
+STORE B into '/home/hdoop/PIG/sample/comparison/$outDir';
+
+############################# Distinct #############################
+####################################################################
+A = load '/media/sf_SharedFolder/Melbon50KB.csv'using PigStorage(',') As (Suburb:charArray,Rooms:int,Type:charArray,Price:charArray,Method:charArray,SellerG:charArray,Bedroom:charArray,Bathroom:charArray);
+G = Distinct A;
+STORE G into '/home/hdoop/PIG/sample/comparison/$outDir';
+
+
+A = load '/media/sf_SharedFolder/Melbon500KB.csv'using PigStorage(',') As (Suburb:charArray,Rooms:int,Type:charArray,Price:charArray,Method:charArray,SellerG:charArray,Bedroom:charArray,Bathroom:charArray);
+G = Distinct A;
+STORE G into '/home/hdoop/PIG/sample/comparison/$outDir';
+
+A = load '/media/sf_SharedFolder/Melbon5MB.csv'using PigStorage(',') As (Suburb:charArray,Rooms:int,Type:charArray,Price:charArray,Method:charArray,SellerG:charArray,Bedroom:charArray,Bathroom:charArray);
+G = Distinct A;
+STORE G into '/home/hdoop/PIG/sample/comparison/$outDir';
+
+
+RiPrIn = load '/media/sf_SharedFolder/50MB.csv' using PigStorage(',') as (DATAID:int,ISO1:int,EVENTIDCNTY:chararray,EVENTIDNO_CNTY:int,EVENT_DATE:chararray,YEAR_i:int,TIME_PRECIS:int,EVENT_TYPEI:chararray,SUBEVENT_TYP:chararray,ACTOR1:chararray,ASSOCACTOR1:chararray,INTER1:int,ACTOR2:chararray,ASSOCACTOR2:chararray,INTER2:int,INTERACTION:int,REGN:chararray,CNTRY:chararray,ADMIN1:chararray,ADMIN2:chararray,ADMIN3:chararray,LOCATN:chararray,LATI:double,LONGI:double,GEO_PRECSN:int,SRC:chararray,SOURCE_SCALE:chararray,NOTS:chararray,FATALITIES:int,tmpstmp:int,iso3:chararray);
+DIST_DATA = DISTINCT RiPrIn;
+STORE DIST_DATA into '/home/hdoop/PIG/sample/comparison/$outDir';
+
+
+a= load '/media/sf_SharedFolder/500MB.csv' using PigStorage(',') as (lon:chararray,lat:chararray,number:int,street:chararray,unit:chararray,city:chararray,district:chararray,region:chararray, postcode:chararray, id:chararray,hash:chararray);
+c = DISTINCT a;
+STORE c INTO '/home/hdoop/PIG/sample/comparison/$outDir' USING PigStorage (',');
+
+
+A = LOAD '/media/sf_SharedFolder/CIS_Automotive_Kaggle_Sample.csv' USING PigStorage(',') AS (vin: chararray, stockNum: chararray, firstSeen: chararray, lastSeen: chararray, msrp: long, askPrice: long, mileage: long, isNew: boolean, color: chararray, interiorColor: chararray);
+B = DISTINCT A;
+STORE B into '/home/hdoop/PIG/sample/comparison/$outDir';
+
+#############################  Join #############################  
+#################################################################  
+A = load '/media/sf_SharedFolder/Melbon50KB.csv'using PigStorage(',') As (Suburb:charArray,Rooms:int,Type:charArray,Price:charArray,Method:charArray,SellerG:charArray,Bedroom:charArray,Bathroom:charArray);
+B = load '/media/sf_SharedFolder/Melbon50KB.csv'using PigStorage(',') As (Suburb:charArray,Rooms:int,Type:charArray,Price:charArray,Method:charArray,SellerG:charArray,Bedroom:charArray,Bathroom:charArray);
+J = JOIN A by $0, B by $0;
+STORE J into '/home/hdoop/PIG/sample/comparison/$outDir';
+
+
+A = load '/media/sf_SharedFolder/Melbon500KB.csv'using PigStorage(',') As (Suburb:charArray,Rooms:int,Type:charArray,Price:charArray,Method:charArray,SellerG:charArray,Bedroom:charArray,Bathroom:charArray);
+B = load '/media/sf_SharedFolder/Melbon500KB.csv'using PigStorage(',') As (Suburb:charArray,Rooms:int,Type:charArray,Price:charArray,Method:charArray,SellerG:charArray,Bedroom:charArray,Bathroom:charArray);
+J = JOIN A by $0, B by $0;
+STORE J into '/home/hdoop/PIG/sample/comparison/$outDir';
+
+
+A = load '/media/sf_SharedFolder/Melbon5MB.csv'using PigStorage(',') As (Suburb:charArray,Rooms:int,Type:charArray,Price:charArray,Method:charArray,SellerG:charArray,Bedroom:charArray,Bathroom:charArray);
+B = load '/media/sf_SharedFolder/Melbon5MB.csv'using PigStorage(',') As (Suburb:charArray,Rooms:int,Type:charArray,Price:charArray,Method:charArray,SellerG:charArray,Bedroom:charArray,Bathroom:charArray);
+J = JOIN A by $0, B by $0;
+STORE J into '/home/hdoop/PIG/sample/comparison/$outDir';
+
+
+RiPrIn1 = load '/media/sf_SharedFolder/50MB.csv' using PigStorage(',') as (DATAID:int,ISO1:int,EVENTIDCNTY:chararray,EVENTIDNO_CNTY:int,EVENT_DATE:chararray,YEAR_i:int,TIME_PRECIS:int,EVENT_TYPEI:chararray,SUBEVENT_TYP:chararray,ACTOR1:chararray,ASSOCACTOR1:chararray,INTER1:int,ACTOR2:chararray,ASSOCACTOR2:chararray,INTER2:int,INTERACTION:int,REGN:chararray,CNTRY:chararray,ADMIN1:chararray,ADMIN2:chararray,ADMIN3:chararray,LOCATN:chararray,LATI:double,LONGI:double,GEO_PRECSN:int,SRC:chararray,SOURCE_SCALE:chararray,NOTS:chararray,FATALITIES:int,tmpstmp:int,iso3:chararray);
+RiPrIn2 = load '/media/sf_SharedFolder/50MB.csv' using PigStorage(',') as (DATAID:int,ISO1:int,EVENTIDCNTY:chararray,EVENTIDNO_CNTY:int,EVENT_DATE:chararray,YEAR_i:int,TIME_PRECIS:int,EVENT_TYPEI:chararray,SUBEVENT_TYP:chararray,ACTOR1:chararray,ASSOCACTOR1:chararray,INTER1:int,ACTOR2:chararray,ASSOCACTOR2:chararray,INTER2:int,INTERACTION:int,REGN:chararray,CNTRY:chararray,ADMIN1:chararray,ADMIN2:chararray,ADMIN3:chararray,LOCATN:chararray,LATI:double,LONGI:double,GEO_PRECSN:int,SRC:chararray,SOURCE_SCALE:chararray,NOTS:chararray,FATALITIES:int,tmpstmp:int,iso3:chararray);
+RiPrIn3 = JOIN RiPrIn1 BY EVENTIDCNTY, RiPrIn2 BY EVENTIDCNTY;
+STORE RiPrIn3 into '/home/hdoop/PIG/sample/comparison/$outDir';
+
+
+a= load '/media/sf_SharedFolder/500MB.csv' using PigStorage(',') as (lon:chararray,lat:chararray,number:int,street:chararray,unit:chararray,city:chararray,district:chararray,region:chararray, postcode:chararray, id:chararray,hash:chararray);
+b= load '/media/sf_SharedFolder/500MB.csv' using PigStorage(',') as (lon:chararray,lat:chararray,number:int,street:chararray,unit:chararray,city:chararray,district:chararray,region:chararray, postcode:chararray, id:chararray,hash:chararray);
+c = JOIN a by id, b by id;
+d = FOREACH c GENERATE id;
+STORE c into '/home/hdoop/PIG/sample/comparison/$outDir';
+
+A = LOAD '/media/sf_SharedFolder/CIS_Automotive_Kaggle_Sample.csv' USING PigStorage(',') AS (vin: chararray, stockNum: chararray, firstSeen: chararray, lastSeen: chararray, msrp: long, askPrice: long, mileage: long, isNew: boolean, color: chararray, interiorColor: chararray);
+B = LOAD '/media/sf_SharedFolder/CIS_Automotive_Kaggle_Sample.csv' USING PigStorage(',') AS (vin: chararray, stockNum: chararray, firstSeen: chararray, lastSeen: chararray, msrp: long, askPrice: long, mileage: long, isNew: boolean, color: chararray, interiorColor: chararray);
+C = JOIN A by vin, B by vin;
+D = FOREACH C GENERATE $0;
+STORE D into '/home/hdoop/PIG/sample/comparison/$outDir';
