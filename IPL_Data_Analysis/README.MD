@@ -1,6 +1,8 @@
 # IPL data analysis
 Project to implement and understand the Hadoop ecosystem.
 
+***Special Mention to my fellow teammates in doing the project: Archana, Jishnu & Rahul***
+
 Technologies used:
 ------------------
 
@@ -109,9 +111,9 @@ Supporting configuration files are provided in configurations/
 6. ClouderaHive - for setting up hive connection to PowerBI via thrift api.
 
 
-***Special Mention to my fellow teammates in doing the project: Archana, Jishnu & Rahul***
 
 ***Courtsey Mentions***
+
 1. Kaggle for dataset and analysis points: ref(https://www.kaggle.com/code/dude431/ipl-detailed-analysis)
 2. Hive Metatore and Hiveserver2 configuration setup: ref(http://www.thecloudavenue.com/2013/11/InstallingAndConfiguringHCatalogAndIntegratingWithPig.html)
 3. Thabresh - cricket analysis project: ref(https://github.com/thabaresh-s/cricket-data-analysis-using-Hive-and-Pig)
