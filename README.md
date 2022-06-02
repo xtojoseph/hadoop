@@ -1,29 +1,10 @@
-# README #
-
-This README would normally document whatever steps are necessary to get your application up and running.
+# HADOOP #
 
 ### What is this repository for? ###
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+* Learn and implement concepts of the Hadoop ecosystem
+* Each technology directory has appropriate details 
 
-### How do I get set up? ###
+### Get in touch with me ###
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+Repo owner: xto.joseph@gmail.com
