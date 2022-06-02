@@ -1,0 +1,35 @@
+Name	Loc	AltNames
+Sheikh Zayed Stadium	Abu Dhabi	
+Sardar Patel Stadium, Motera	Ahmedabad	
+M Chinnaswamy Stadium	Bangalore	M.Chinnaswamy Stadium
+OUTsurance Oval	Bloemfontein	
+Newlands	Cape Town	
+SuperSport Park	Centurion	
+Punjab Cricket Association IS Bindra Stadium, Mohali	Chandigarh	Punjab Cricket Association Stadium, Mohali
+MA Chidambaram Stadium, Chepauk	Chennai	
+Barabati Stadium	Cuttack	
+Feroz Shah Kotla	Delhi	
+Himachal Pradesh Cricket Association Stadium	Dharamsala	
+Dubai International Cricket Stadium	Dubai	
+Kingsmead	Durban	
+Buffalo Park	East London	
+Rajiv Gandhi International Stadium, Uppal	Hyderabad	
+Holkar Cricket Stadium	Indore	
+Sawai Mansingh Stadium	Jaipur	
+New Wanderers Stadium	Johannesburg	
+Green Park	Kanpur	
+De Beers Diamond Oval	Kimberley	
+Nehru Stadium	Kochi	
+Eden Gardens	Kolkata	
+Brabourne Stadium	Mumbai	
+Dr DY Patil Sports Academy	Mumbai	
+Wankhede Stadium	Mumbai	
+Vidarbha Cricket Association Stadium, Jamtha	Nagpur	
+St George's Park	Port Elizabeth	
+Maharashtra Cricket Association Stadium	Pune	
+Subrata Roy Sahara Stadium	Pune	
+Shaheed Veer Narayan Singh International Stadium	Raipur	
+Saurashtra Cricket Association Stadium	Rajkot	
+JSCA International Stadium Complex	Ranchi	
+Sharjah Cricket Stadium	Sharjah	
+Dr. Y.S. Rajasekhara Reddy ACA-VDCA Cricket Stadium	Visakhapatnam	
